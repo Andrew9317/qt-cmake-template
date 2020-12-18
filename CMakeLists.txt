@@ -36,7 +36,7 @@ add_executable(${PRJ_NAME}
     src/window.cpp
     src/main.cpp)
 
-target_include_directories(${PRJ_NAME} PRIVATE ${Qt6Core_INCLUDE_DIRS})
+target_include_directories(${PRJ_NAME} PRIVATE ${Qt6_INCLUDE_DIRS})
 target_include_directories(${PRJ_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 #Add any extra libs to link also.
