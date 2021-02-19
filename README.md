@@ -1,4 +1,4 @@
-qt6-cmake-template
+qt-cmake-template
 ===========
 
 A Qt5/6 CMake quickstart template.
