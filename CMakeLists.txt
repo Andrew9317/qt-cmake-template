@@ -5,7 +5,7 @@ set(PRJ_NAME Temp)
 
 #You can change this to Qt5 if you
 #are not ready to migrate to Qt6.
-set(QT_MAJOR_VERSION 6)
+set(QT_MAJOR_VERSION 5)
 
 project(${PRJ_NAME} VERSION 0.0.1 DESCRIPTION "Project Description")
 
@@ -41,4 +41,4 @@ target_include_directories(${PRJ_NAME} PRIVATE ${Qt${QT_MAJOR_VERSION}_INCLUDE_D
 target_include_directories(${PRJ_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 #Add any extra libs to link also.
-target_link_libraries(${PRJ_NAME} PRIVATE Qt${QT_MAJOR_VERSION}::Widgets)# Qt${QT_MAJOR_VERSION}::Widgets)
+target_link_libraries(${PRJ_NAME} PRIVATE Qt${QT_MAJOR_VERSION}::Widgets)
