@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 #Project name
 set(PRJ_NAME Temp)
 
-#You can change this to Qt5 or Qt4 if you
+#You can change this to Qt5 if you
 #are not ready to migrate to Qt6.
 set(QT_MAJOR_VERSION 6)
 
