@@ -5,7 +5,7 @@ set(PRJ_NAME Temp)
 
 #You can change this to Qt5 or Qt4 if you
 #are not ready to migrate to Qt6.
-set(QT_PACKAGE Qt5)
+set(QT_MAJOR_VERSION 6)
 
 project(${PRJ_NAME} VERSION 0.0.1 DESCRIPTION "Project Description")
 
@@ -16,27 +16,29 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#Check to make sure the environment var is set
-#since we need to know where Qt is installed.
-if($ENV{QT_HOME})
-    message(STATUS "Looking for Qt in: " $ENV{QT_HOME})
+#See if the environment var is set
+if(DEFINED ENV{Qt${QT_MAJOR_VERSION}_HOME})
+    message(STATUS "Looking for Qt in: " $ENV{Qt${QT_MAJOR_VERSION}_HOME})
 else()
-    message(STATUS "QT_HOME environment variable not set. Checking default paths.")
+    message(STATUS "Qt${QT_MAJOR_VERSION}_HOME environment variable not set. Checking default paths.")
 endif()
 
-#standard paths to include
-find_package(${QT_PACKAGE} COMPONENTS Core Widgets REQUIRED PATHS $ENV{QT_HOME})
+#Qt6 requires setting the CMAKE_PREFIX_PATH whereas 5 does not.
+if("${QT_MAJOR_VERSION}" STREQUAL "6")
+    set(CMAKE_PREFIX_PATH $ENV{Qt${QT_MAJOR_VERSION}_HOME})
+endif()
 
-#Add extra components here as needed.
-#find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+#find_package should find everything fine so long as the ENV Variable is set or, for linux systems,
+#it is in the default install path.
+find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Widgets REQUIRED PATHS $ENV{Qt${QT_MAJOR_VERSION}_HOME})
 
 add_executable(${PRJ_NAME}
     include/window.hpp
     src/window.cpp
     src/main.cpp)
 
-target_include_directories(${PRJ_NAME} PRIVATE ${Qt6_INCLUDE_DIRS})
+target_include_directories(${PRJ_NAME} PRIVATE ${Qt${QT_MAJOR_VERSION}_INCLUDE_DIRS})
 target_include_directories(${PRJ_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 #Add any extra libs to link also.
-target_link_libraries(${PRJ_NAME} PRIVATE ${QT_PACKAGE}::Core ${QT_PACKAGE}::Widgets)
+target_link_libraries(${PRJ_NAME} PRIVATE Qt${QT_MAJOR_VERSION}::Widgets)# Qt${QT_MAJOR_VERSION}::Widgets)
