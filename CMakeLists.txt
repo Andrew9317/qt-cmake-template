@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 
 #Project name
-set(PRJ_NAME Temp)
+set(TARGET_NAME Temp)
 
 #You can change this to Qt5 if you
 #are not ready to migrate to Qt6.
 set(QT_MAJOR_VERSION 5)
 
-project(${PRJ_NAME} VERSION 0.0.1 DESCRIPTION "Project Description")
+project(${TARGET_NAME} VERSION 0.0.1 DESCRIPTION "Project Description")
 
 #Make sure CMake will take care of moc for us
 set(CMAKE_AUTOMOC ON)
@@ -32,13 +32,21 @@ endif()
 #it is in the default install path.
 find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Widgets REQUIRED PATHS $ENV{Qt${QT_MAJOR_VERSION}_HOME})
 
-add_executable(${PRJ_NAME}
+add_executable(${TARGET_NAME}
     include/window.hpp
     src/window.cpp
     src/main.cpp)
+    
+if(MSVC)
+    target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
+else()
+    target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
+endif()
 
-target_include_directories(${PRJ_NAME} PRIVATE ${Qt${QT_MAJOR_VERSION}_INCLUDE_DIRS})
-target_include_directories(${PRJ_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(${TARGET_NAME} PRIVATE ${Qt${QT_MAJOR_VERSION}_INCLUDE_DIRS})
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+set_target_properties(${TARGET_NAME} PROPERTIES DEBUG_OUTPUT_NAME "${TARGET_NAME}d" RELEASE_OUTPUT_NAME ${TARGET_NAME})
 
 #Add any extra libs to link also.
-target_link_libraries(${PRJ_NAME} PRIVATE Qt${QT_MAJOR_VERSION}::Widgets)
+target_link_libraries(${TARGET_NAME} PRIVATE Qt${QT_MAJOR_VERSION}::Widgets)
