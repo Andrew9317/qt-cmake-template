@@ -23,11 +23,6 @@ else()
     message(STATUS "Qt${QT_MAJOR_VERSION}_HOME environment variable not set. Checking default paths.")
 endif()
 
-#Qt6 requires setting the CMAKE_PREFIX_PATH whereas 5 does not.
-if("${QT_MAJOR_VERSION}" STREQUAL "6")
-    set(CMAKE_PREFIX_PATH $ENV{Qt${QT_MAJOR_VERSION}_HOME})
-endif()
-
 #find_package should find everything fine so long as the ENV Variable is set or, for linux systems,
 #it is in the default install path.
 find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Widgets REQUIRED PATHS $ENV{Qt${QT_MAJOR_VERSION}_HOME})
