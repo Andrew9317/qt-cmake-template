@@ -34,7 +34,7 @@ Tester::Tester(QWidget* parent)
     });
 
     //Syntax to connect a custom class signal with a lambda.
-    QObject::connect(this, &Tester::sigLabelTextUpdated, this, [this](std::string_view val){
+    QObject::connect(this, &Tester::sigLabelTextUpdated, this, [](std::string_view val){
         std::cout << val << std::endl;
     });
 }
